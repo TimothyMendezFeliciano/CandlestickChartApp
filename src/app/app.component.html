@@ -1,9 +1,43 @@
-<!-- Toolbar -->
-<app-header (featureSelected)='onNavigate($event)'></app-header>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
+<mat-toolbar class="mat-elevation-z8">
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)='sidenav.toggle()'>
+    <mat-icon *ngIf='!sidenav.opened'>
+      menu
+    </mat-icon>
+    <mat-icon *ngIf='sidenav.opened'>
+      close
+    </mat-icon>
+  </button>
+  My App
+</mat-toolbar>
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+
+    <img class="avatar mat-elevation-z8" src="./assets/img/FotoProfesional.png" alt="image" />
+    <h4 class="name">Timothy Mendez Feliciano</h4>
+    <p class="designation"> Front End Developer </p>
+
+    <mat-divider class='divider'></mat-divider>
+
+    <button mat-button class='menu-button' *ngIf='!isAuthenticated'>
+      <mat-icon> account_circle </mat-icon>|
+      <a
+      style="text-decoration: none; color: inherit;"
+      routerLinkActive="true"
+      routerLink="/auth" >Account</a>
+    </button>
+    <button mat-button class='menu-button' *ngIf='isAuthenticated'>
+      <mat-icon> bar_chart </mat-icon>|
+      <a
+      style="text-decoration: none; color: inherit;"
+      routerLinkActive="true"
+      routerLink="/graph"> Chart </a>
+    </button>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
       <router-outlet></router-outlet>
     </div>
-  </div>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
