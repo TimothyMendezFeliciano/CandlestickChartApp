@@ -56,8 +56,7 @@ export class AuthComponent implements OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
-          this.router.navigate(["/graph"]);
+          this.router.navigateByUrl("/graph");
         },
         error: (error) => {
           this.error = error;
