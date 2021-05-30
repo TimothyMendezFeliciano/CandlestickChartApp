@@ -29,10 +29,10 @@ export class BinanceAPIService {
     return this.http.get(baseEndpoint + routes.exchangeInfo);
   }
 
-  getCandleStickData() {
+  getCandleStickData(interval: string) {
     let params: HttpParams = new HttpParams()
       .set("symbol", "BTCUSDT")
-      .set("interval", "4h")
+      .set("interval", interval)
       .set("limit", "30");
     return this.http
       .get<CandleStick[]>(baseEndpoint + routes.candleStick, {
