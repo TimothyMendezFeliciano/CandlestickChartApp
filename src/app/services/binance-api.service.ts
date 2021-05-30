@@ -33,25 +33,24 @@ export class BinanceAPIService {
     let params: HttpParams = new HttpParams()
       .set("symbol", "BTCUSDT")
       .set("interval", "4h")
-      .set("limit", "500");
+      .set("limit", "30");
     return this.http
       .get<CandleStick[]>(baseEndpoint + routes.candleStick, {
         params: params,
       })
       .pipe(
         map((candlestick) => {
-          let result: CandleStick[] = [
-          ];
+          let result: CandleStick[] = [];
           for (let i = 0; i < candlestick.length; i++) {
             for (let j = 0; j < 1; j++) {
               result.push({
-                openTime: candlestick[i][0],
+                openTime: new Date(candlestick[i][0]),
                 open: candlestick[i][1],
                 high: candlestick[i][2],
                 low: candlestick[i][3],
                 close: candlestick[i][4],
                 volume: candlestick[i][5],
-                closeTime: candlestick[i][6],
+                closeTime: new Date(candlestick[i][6]),
                 quoteAssetVolume: candlestick[i][7],
                 numberOfTrades: candlestick[i][8],
                 buyBaseAssetVolume: candlestick[i][9],

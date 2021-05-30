@@ -1,11 +1,11 @@
 export interface CandleStick {
-  openTime: number;
+  openTime: Date;
   open: string;
   high: string;
   low: string;
   close: string;
   volume: string;
-  closeTime: number;
+  closeTime: Date;
   quoteAssetVolume: string;
   numberOfTrades: number;
   buyBaseAssetVolume: string;

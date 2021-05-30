@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z8">
+<!-- <mat-toolbar>
   <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)='sidenav.toggle()'>
     <mat-icon *ngIf='!sidenav.opened'>
       menu
@@ -11,33 +11,60 @@
 </mat-toolbar>
 <mat-sidenav-container>
 
-  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+  <mat-sidenav>
 
-    <img class="avatar mat-elevation-z8" src="./assets/img/FotoProfesional.png" alt="image" />
-    <h4 class="name">Timothy Mendez Feliciano</h4>
-    <p class="designation"> Front End Developer </p>
+    <img width="32" height="32" src="./assets/img/FotoProfesional.png" alt="image" />
+    <h4>Timothy Mendez Feliciano</h4>
+    <p> Front End Developer </p>
 
-    <mat-divider class='divider'></mat-divider>
+    <mat-divider></mat-divider>
 
-    <button mat-button class='menu-button' *ngIf='!isAuthenticated'>
+    <button mat-button *ngIf='!isAuthenticated'>
       <mat-icon> account_circle </mat-icon>|
-      <a
-      style="text-decoration: none; color: inherit;"
-      routerLinkActive="true"
-      routerLink="/auth" >Account</a>
+      <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/auth">Account</a>
     </button>
-    <button mat-button class='menu-button' *ngIf='isAuthenticated'>
+    <button mat-button *ngIf='isAuthenticated'>
       <mat-icon> bar_chart </mat-icon>|
-      <a
-      style="text-decoration: none; color: inherit;"
-      routerLinkActive="true"
-      routerLink="/graph"> Chart </a>
+      <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/graph"> Chart </a>
     </button>
+
+
 
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="content mat-elevation-z8">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+<mat-toolbar>
+  <button mat-icon-button aria-label="icon-button with menu icon" (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My App</span>
+  <span class="spacer"></span>
+  <button mat-icon-button aria-label="icon-button for sign out" (click)="onLogout()">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-drawer-container class="container" [hasBackdrop]="true">
+  <mat-drawer #drawer mode="over">
+
+    <img width="32" height="32" src="./assets/img/FotoProfesional.png" alt="image" />
+    <h4>Timothy Mendez Feliciano</h4>
+    <p> Front End Developer </p>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button *ngIf='!isAuthenticated'>
+      <mat-icon> account_circle </mat-icon>|
+      <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/auth">Account</a>
+    </button>
+    <button mat-button *ngIf='isAuthenticated'>
+      <mat-icon> bar_chart </mat-icon>|
+      <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/graph"> Chart </a>
+    </button>
+
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

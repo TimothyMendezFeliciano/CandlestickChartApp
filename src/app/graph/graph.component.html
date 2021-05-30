@@ -1,1 +1,12 @@
-<p>graph works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-label>
+      <p>Select a Time Frame</p>
+    </mat-label>
+    <mat-select [(value)]="selectedTimeFrame">
+      <mat-option>-</mat-option>
+      <mat-option *ngFor='let timeFrames of availableTimeFrames' [value]='timeFrames'>{{timeFrames}}</mat-option>
+    </mat-select>
+  </mat-card-header>
+  <google-chart *ngIf='isReady' [data]='candleStickChart'></google-chart>
+</mat-card>
