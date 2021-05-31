@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { CandleStick } from "../models/candlestick.model";
 import { map } from "rxjs/operators";
+import { ExchangeInformationInterface } from "../models/exchange-information.model";
 
 const baseEndpoint: string = "https://api.binance.com";
 
@@ -22,18 +23,30 @@ export class BinanceAPIService {
   }
 
   getExchangeInfo() {
-    // let headers: HttpHeaders = new HttpHeaders().set(
-    //   "X-MBX-APIKEY",
-    //   environment.binanceAPIKey
-    // );
-    return this.http.get(baseEndpoint + routes.exchangeInfo);
+    return this.http.get<ExchangeInformationInterface>(
+      baseEndpoint + routes.exchangeInfo
+    );
   }
 
-  getCandleStickData(interval: string) {
+  getSymbolsPair() {
+    let symbolsPair = [];
+    return this.http
+      .get<ExchangeInformationInterface>(baseEndpoint + routes.exchangeInfo)
+      .pipe(
+        map((exchangeInfo) => {
+          for (let i = 0; i < 100; i++) {
+            symbolsPair.push(exchangeInfo.symbols[i].symbol);
+          }
+          return symbolsPair;
+        })
+      );
+  }
+
+  getCandleStickData(marketPair: string, interval: string, limit: number) {
     let params: HttpParams = new HttpParams()
-      .set("symbol", "BTCUSDT")
+      .set("symbol", marketPair)
       .set("interval", interval)
-      .set("limit", "30");
+      .set("limit", limit);
     return this.http
       .get<CandleStick[]>(baseEndpoint + routes.candleStick, {
         params: params,

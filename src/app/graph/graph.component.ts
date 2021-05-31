@@ -1,8 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { BinanceAPIService } from "../services/binance-api.service";
-import { GoogleChartsDataTableInterface } from "ng2-google-charts/lib/google-charts-datatable";
 import { GoogleChartInterface } from "ng2-google-charts";
 import { finalize } from "rxjs/operators";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 
 @Component({
   selector: "app-graph",
@@ -14,23 +19,69 @@ export class GraphComponent implements OnInit {
   private isReady: boolean = false;
 
   defaultTimeFrame: string = "1d";
-  selectedTimeFrame: string = "";
-  availableTimeFrames: string[] = ["1m", "15m", "1h", "4h", "1d", "3d"];
+  availableTimeFrames: string[] = [
+    "1m",
+    "3m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "4h",
+    "6h",
+    "8h",
+    "12h",
+    "1d",
+    "3d",
+    "1w",
+    "1M",
+  ];
 
-  constructor(private binanceAPI: BinanceAPIService) {}
+  defaultMarketPair: string = "BTCUSDT";
+  availableMarketPairs: string[];
 
-  ngOnInit() {
-    this.getCandleData(this.defaultTimeFrame);
+  defaultLimit: number = 30;
+  availableLimit: number[] = [14, 30, 50, 100, 250, 500, 1000];
+  private options: FormGroup;
+  constructor(private binanceAPI: BinanceAPIService, private fb: FormBuilder) {
+    this.options = this.fb.group({
+      timeFrame: new FormControl(""),
+      marketPair: new FormControl(""),
+      limit: new FormControl(""),
+    });
   }
 
-  getCandleData(interval: string) {
-    console.log("interval", interval);
+  ngOnInit() {
+    this.getSymbolsPair();
+    this.getCandleData(
+      this.defaultMarketPair,
+      this.defaultTimeFrame,
+      this.defaultLimit
+    );
+  }
+
+  getSymbolsPair() {
     this.isReady = false;
     this.binanceAPI
-      .getCandleStickData(interval)
+      .getSymbolsPair()
       .pipe(
         finalize(() => {
-          console.log("The Chart", this.candleStickChart);
+          this.isReady = true;
+        })
+      )
+      .subscribe({
+        next: (marketPairs) => {
+          this.availableMarketPairs = marketPairs;
+        },
+      });
+  }
+
+  getCandleData(marketPair: string, interval: string, limit: number) {
+    this.isReady = false;
+    this.binanceAPI
+      .getCandleStickData(marketPair, interval, limit)
+      .pipe(
+        finalize(() => {
           this.isReady = true;
         })
       )
@@ -64,7 +115,9 @@ export class GraphComponent implements OnInit {
                 bold: true,
               },
               vAxis: {
-                title: "Price",
+                title: this.options.value.marketPair
+                  ? this.options.value.marketPair
+                  : this.defaultMarketPair,
               },
               hAxis: {
                 title: "TimeFrame",
@@ -74,12 +127,26 @@ export class GraphComponent implements OnInit {
                 stroke: "black",
                 strokeWidth: 5,
               },
-              legend: {
-                position: "right",
-              },
             },
           };
         },
       });
+  }
+
+  onSubmit() {
+    let mP = this.defaultMarketPair;
+    let tF = this.defaultTimeFrame;
+    let l = this.defaultLimit;
+    if (this.options.value.marketPair) {
+      mP = this.options.value.marketPair;
+    }
+    if (this.options.value.timmeFrame) {
+      tF = this.options.value.timmeFrame;
+    }
+    if (this.options.value.limit) {
+      l = this.options.value.limit;
+    }
+
+    this.getCandleData(mP, tF, l);
   }
 }

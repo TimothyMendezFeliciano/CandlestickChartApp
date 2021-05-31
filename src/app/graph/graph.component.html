@@ -1,14 +1,38 @@
-<mat-card class="chart-card">
+<mat-card class="chart-card" *ngIf='isReady'>
   <mat-card-header>
-    <mat-label>
-      <p>Select a Time Frame</p>
-    </mat-label>
-    <mat-select [(value)]="selectedTimeFrame" (selectionChange)="getCandleData($event.value)">
-      <mat-option>-</mat-option>
-      <mat-option *ngFor='let timeFrames of availableTimeFrames' [value]='timeFrames'>{{timeFrames}}</mat-option>
-    </mat-select>
+    <form class="container" [formGroup]="options" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Select a Time Frame</mat-label>
+        <mat-select formControlName="timeFrame">
+          <mat-option>---</mat-option>
+          <mat-option *ngFor="let timeFrames of availableTimeFrames" [value]="timeFrames">{{timeFrames}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select a Market Pair</mat-label>
+        <mat-select formControlName="marketPair">
+          <mat-option>---</mat-option>
+          <mat-option *ngFor="let marketPair of availableMarketPairs" [value]="marketPair">{{marketPair}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select Amount of Candles</mat-label>
+        <mat-select formControlName="limit">
+          <mat-option>---</mat-option>
+          <mat-option *ngFor="let limitOption of availableLimit" [value]="limitOption">{{limitOption}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
   </mat-card-header>
   <mat-card-content>
-    <google-chart *ngIf='isReady' [data]='candleStickChart'></google-chart>
+    <google-chart [data]='candleStickChart'></google-chart>
   </mat-card-content>
 </mat-card>

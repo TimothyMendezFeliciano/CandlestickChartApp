@@ -51,6 +51,7 @@ export class AppComponent implements OnInit, AfterContentInit, OnDestroy {
     this.userSub = this.authService.user.subscribe({
       next: (user) => {
         this.isAuthenticated = !!user;
+        console.log("Auth", user);
       },
       error: (e) => {
         console.log("Error", e);

@@ -1,40 +1,3 @@
-<!-- <mat-toolbar>
-  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)='sidenav.toggle()'>
-    <mat-icon *ngIf='!sidenav.opened'>
-      menu
-    </mat-icon>
-    <mat-icon *ngIf='sidenav.opened'>
-      close
-    </mat-icon>
-  </button>
-  My App
-</mat-toolbar>
-<mat-sidenav-container>
-
-  <mat-sidenav>
-
-    <img width="32" height="32" src="./assets/img/FotoProfesional.png" alt="image" />
-    <h4>Timothy Mendez Feliciano</h4>
-    <p> Front End Developer </p>
-
-    <mat-divider></mat-divider>
-
-    <button mat-button *ngIf='!isAuthenticated'>
-      <mat-icon> account_circle </mat-icon>|
-      <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/auth">Account</a>
-    </button>
-    <button mat-button *ngIf='isAuthenticated'>
-      <mat-icon> bar_chart </mat-icon>|
-      <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/graph"> Chart </a>
-    </button>
-
-
-
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
 <mat-toolbar>
   <button mat-icon-button aria-label="icon-button with menu icon" (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
@@ -46,7 +9,7 @@
   </button>
 </mat-toolbar>
 <mat-drawer-container class="container" [hasBackdrop]="true">
-  <mat-drawer #drawer mode="over">
+  <mat-drawer #drawer mode="side">
 
     <img width="192" height="192" src="./assets/img/FotoProfesional.png" alt="image" />
     <h4>Timothy Mendez Feliciano</h4>
@@ -54,11 +17,11 @@
 
     <mat-divider></mat-divider>
 
-    <button mat-button *ngIf='!isAuthenticated'>
+    <button mat-raised-button color="accent" *ngIf='!isAuthenticated'>
       <mat-icon> account_circle </mat-icon>|
       <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/auth">Account</a>
     </button>
-    <button mat-button *ngIf='isAuthenticated'>
+    <button mat-raised-button color="accent" *ngIf='isAuthenticated'>
       <mat-icon> bar_chart </mat-icon>|
       <a style="text-decoration: none; color: inherit;" routerLinkActive="true" routerLink="/graph"> Chart </a>
     </button>
