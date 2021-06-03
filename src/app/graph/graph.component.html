@@ -1,5 +1,5 @@
-<mat-card class="chart-card" *ngIf='isReady'>
-  <mat-card-header>
+<mat-card class="chart-card" *ngIf="isReady">
+  <mat-card-header class="d-flex justify-content-between">
     <form class="container" [formGroup]="options" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill">
         <mat-label>Select a Time Frame</mat-label>
@@ -33,6 +33,8 @@
     </form>
   </mat-card-header>
   <mat-card-content>
-    <google-chart [data]='candleStickChart'></google-chart>
+    <app-candlestick-chart [marketPair]="options.value.marketPair"
+      [interval]="options.value.timeFrame" [limit]="options.value.limit"
+      (candleStickReadyEvent)="isReadyVerification($event)"></app-candlestick-chart>
   </mat-card-content>
 </mat-card>

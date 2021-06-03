@@ -3,7 +3,7 @@ import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "../services/auth-service.service";
-import { AuthResponseData } from '../models/auth-response.model';
+import { AuthResponseData } from "../models/auth-response.model";
 import { finalize } from "rxjs/operators";
 
 @Component({
@@ -35,34 +35,35 @@ export class AuthComponent implements OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    if(form.valid) {
+    if (form.valid) {
       const email = form.value.email;
       const password = form.value.password;
 
       let authObservable: Observable<AuthResponseData>;
 
       this.isLoading = true;
-      if(this.isLoginMode) {
+      if (this.isLoginMode) {
         authObservable = this.authService.logIn(email, password);
-      }
-      else {
+      } else {
         authObservable = this.authService.signUp(email, password);
       }
 
-      authObservable.pipe(
-        finalize( () => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          this.router.navigateByUrl("/graph");
-        },
-        error: (error) => {
-          this.error = error;
-          // this.showErrorAlert(error);
-        }
-      });
+      authObservable
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl("/graph");
+          },
+          error: (error) => {
+            this.error = error;
+            console.log(error);
+            // this.showErrorAlert(error);
+          },
+        });
     }
     form.reset();
   }

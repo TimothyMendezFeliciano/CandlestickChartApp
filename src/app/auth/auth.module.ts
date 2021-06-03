@@ -5,14 +5,17 @@ import { AuthComponent } from "./auth.component";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CoreModule } from "../core.module";
+import { MatButtonModule, MatFormFieldModule } from "@angular/material";
 
 @NgModule({
   declarations: [AuthComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
-    CoreModule,
     FormsModule,
+    MatFormFieldModule,
+    HttpClientModule,
+    MatButtonModule,
+    CoreModule,
     RouterModule.forChild([{ path: "", component: AuthComponent }]),
   ],
 })
