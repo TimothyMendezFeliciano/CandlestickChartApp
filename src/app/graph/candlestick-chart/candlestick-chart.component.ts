@@ -10,12 +10,6 @@ import {
 import { BinanceAPIService } from "../../services/binance-api.service";
 import { GoogleChartInterface } from "ng2-google-charts";
 
-interface verifiedValues {
-  marketPair: string;
-  interval: string;
-  limit: number;
-}
-
 @Component({
   selector: "app-candlestick-chart",
   templateUrl: "./candlestick-chart.component.html",
@@ -27,12 +21,13 @@ export class CandlestickChartComponent implements OnInit {
   @Input() interval: string;
   @Input() limit: number;
 
-  @Output() candleStickReadyEvent = new EventEmitter<boolean>(true);
+  @Output() candleStickReadyEvent = new EventEmitter<OHLC[]>(true);
 
   private defaultMarketPair = "BTCUSDT";
   private defaultInterval = "1d";
   private defaultLimit = 14;
   private candleStickChart: GoogleChartInterface;
+  private candleData: OHLC[];
 
   private isReady: boolean = false;
 
@@ -57,23 +52,31 @@ export class CandlestickChartComponent implements OnInit {
 
   getCandleData(marketPair: string, interval: string, limit: number) {
     this.isReady = false;
-    this.binanceAPI.getCandleStickData(marketPair, interval, limit).subscribe({
+    this.binanceAPI.getCandleStickData(marketPair, interval, limit+1).subscribe({
       next: (result) => {
-        let data = [];
+        let data: any[] = [["Date", "Low", "High", "Open", "Close"]];
+        let ohlcData: OHLC[] = [];
         result.forEach((candle) => {
           data.push([
             candle.openTime.toString().slice(0, 4),
-            +candle.low,
-            +candle.open,
-            +candle.close,
-            +candle.high,
+            Number(candle.low),
+            Number(candle.open),
+            Number(candle.close),
+            Number(candle.high),
           ]);
+          ohlcData.push({
+            low: Number(candle.low),
+            open: Number(candle.open),
+            close: Number(candle.close),
+            high: Number(candle.high),
+          });
         });
         this.candleStickChart = this.generateChart(data);
+        this.candleData = ohlcData;
       },
       complete: () => {
         this.isReady = true;
-        this.candleStickReadyEvent.emit(this.isReady);
+        this.candleStickReadyEvent.emit(this.candleData);
         this.chartComponent.draw(this.candleStickChart);
       },
     });
@@ -83,7 +86,7 @@ export class CandlestickChartComponent implements OnInit {
     return {
       chartType: "CandlestickChart",
       dataTable: data,
-      firstRowIsData: true,
+      // firstRowIsData: false, // reset to true
       options: {
         candlestick: {
           fallingColor: { fill: "#FF0000", stroke: "#FF0000" },
@@ -102,7 +105,7 @@ export class CandlestickChartComponent implements OnInit {
         hAxis: {
           title: this.interval,
         },
-        height: 500,
+        height: 400,
         backgroundColor: {
           stroke: "black",
           strokeWidth: 5,

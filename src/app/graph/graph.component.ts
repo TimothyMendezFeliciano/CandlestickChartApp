@@ -3,6 +3,7 @@ import { BinanceAPIService } from "../services/binance-api.service";
 import { finalize } from "rxjs/operators";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { CandlestickChartComponent } from "./candlestick-chart/candlestick-chart.component";
+import { RsiChartComponent } from "./rsi-chart/rsi-chart.component";
 
 @Component({
   selector: "app-graph",
@@ -41,6 +42,10 @@ export class GraphComponent implements OnInit {
 
   @ViewChild(CandlestickChartComponent, { static: false })
   candleStickChild!: CandlestickChartComponent;
+
+  @ViewChild(RsiChartComponent, { static: false })
+  rsiChild!: RsiChartComponent;
+  private candleData;
   constructor(private binanceAPI: BinanceAPIService, private fb: FormBuilder) {
     this.options = this.fb.group({
       timeFrame: new FormControl(""),
@@ -77,5 +82,7 @@ export class GraphComponent implements OnInit {
     );
   }
 
-  isReadyVerification(isReady: boolean) {}
+  candleStickReady(ohclData: OHLC[]) {
+    this.rsiChild.calculateRSI(ohclData);
+  }
 }

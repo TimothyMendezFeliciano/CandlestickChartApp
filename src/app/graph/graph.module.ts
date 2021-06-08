@@ -12,13 +12,14 @@ import {
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule, MatIconModule } from "@angular/material";
 import { CandlestickChartComponent } from './candlestick-chart/candlestick-chart.component';
+import { RsiChartComponent } from './rsi-chart/rsi-chart.component';
 
 const routes: Routes = [
   { path: "", component: GraphComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
-  declarations: [GraphComponent, CandlestickChartComponent],
+  declarations: [GraphComponent, CandlestickChartComponent, RsiChartComponent],
   imports: [
     CommonModule,
     FormsModule,

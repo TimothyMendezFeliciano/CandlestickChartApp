@@ -33,8 +33,8 @@
     </form>
   </mat-card-header>
   <mat-card-content>
-    <app-candlestick-chart [marketPair]="options.value.marketPair"
-      [interval]="options.value.timeFrame" [limit]="options.value.limit"
-      (candleStickReadyEvent)="isReadyVerification($event)"></app-candlestick-chart>
+    <app-candlestick-chart [marketPair]="options.value.marketPair" [interval]="options.value.timeFrame"
+      [limit]="options.value.limit" (candleStickReadyEvent)="candleStickReady($event)"></app-candlestick-chart>
+    <app-rsi-chart></app-rsi-chart>
   </mat-card-content>
 </mat-card>
