@@ -1,6 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
 import { GoogleChartInterface } from "ng2-google-charts";
 
+interface RelativeStrenghIndexStatus {
+  color: string[];
+  state: string;
+}
+
 @Component({
   selector: "app-rsi-chart",
   templateUrl: "./rsi-chart.component.html",
@@ -44,9 +49,23 @@ export class RsiChartComponent {
     this.relativeStrengthIndex = 100 - 100 / (1 + this.relativeStrength);
     let barChartData: any[] = [];
     barChartData.push(["RSI(14)", this.relativeStrengthIndex]);
-    this.barChart = this.generateChart(barChartData);
+    let rsiStatus = this.calculateRSIStatus(barChartData[0]);
+    this.barChart = this.generateChart(
+      barChartData,
+      rsiStatus.color,
+      rsiStatus.state
+    );
     this.isReady = true;
     this.chartComponent.draw(this.barChart);
+  }
+
+  private calculateRSIStatus(data: any[]): RelativeStrenghIndexStatus {
+    if (data[1] <= 30)
+      return { color: ["#E7010B"], state: "Extremely Oversold" };
+    if (data[1] <= 50) return { color: ["#E75252"], state: "Oversold" };
+    if (data[1] <= 70) return { color: ["#96E752"], state: "Overbought" };
+    if (data[1] <= 100)
+      return { color: ["#3FFF00"], state: "Extremely Overbought" };
   }
 
   private calculateAverage(data: number[], periodN: number) {
@@ -57,7 +76,7 @@ export class RsiChartComponent {
     return sum / periodN;
   }
 
-  private generateChart(data: any[]) {
+  private generateChart(data: any[], rsiStatus: string[], rsiState: string) {
     return {
       chartType: "BarChart",
       dataTable: data,
@@ -69,6 +88,9 @@ export class RsiChartComponent {
           maxValue: 100,
           minValue: 0,
         },
+        colors: rsiStatus,
+        title: rsiState,
+        titlePosition: "out",
       },
     };
   }
