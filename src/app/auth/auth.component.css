@@ -1,11 +1,13 @@
 .body {
-    display: block;
-    text-align:center;
+  display: block;
+  text-align: center;
+  margin: auto;
+  width: 250px;
 }
 
 .form-content {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }

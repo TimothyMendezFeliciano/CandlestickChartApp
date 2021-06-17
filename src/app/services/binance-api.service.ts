@@ -46,7 +46,7 @@ export class BinanceAPIService {
     let params: HttpParams = new HttpParams()
       .set("symbol", marketPair)
       .set("interval", interval)
-      .set("limit", limit);
+      // .set("limit", limit);
     return this.http
       .get<CandleStick[]>(baseEndpoint + routes.candleStick, {
         params: params,
