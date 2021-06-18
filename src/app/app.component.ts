@@ -7,7 +7,7 @@ import {
   Component,
   ViewChild,
 } from "@angular/core";
-import { MatSidenav } from "@angular/material";
+import { MatSidenav } from "@angular/material/sidenav";
 import { Subscription } from "rxjs";
 import { AuthService } from "./services/auth-service.service";
 

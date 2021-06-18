@@ -4,13 +4,12 @@ import { GraphComponent } from "./graph.component";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../auth/auth.guard";
 import { Ng2GoogleChartsModule } from "ng2-google-charts";
-import {
-  MatCardModule,
-  MatSelectModule,
-  MatDividerModule,
-} from "@angular/material";
+import { MatCardModule } from "@angular/material/card";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatSelectModule } from "@angular/material/select";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatButtonModule, MatIconModule } from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { CandlestickChartComponent } from './candlestick-chart/candlestick-chart.component';
 import { RsiChartComponent } from './rsi-chart/rsi-chart.component';
 

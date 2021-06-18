@@ -5,7 +5,8 @@ import { AuthComponent } from "./auth.component";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CoreModule } from "../core.module";
-import { MatButtonModule, MatFormFieldModule } from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @NgModule({
   declarations: [AuthComponent],
