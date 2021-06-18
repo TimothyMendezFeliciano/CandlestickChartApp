@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RsiChartComponent } from './rsi-chart.component';
 
@@ -6,7 +6,7 @@ describe('RsiChartComponent', () => {
   let component: RsiChartComponent;
   let fixture: ComponentFixture<RsiChartComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RsiChartComponent ]
     })
