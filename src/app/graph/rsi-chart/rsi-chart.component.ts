@@ -19,7 +19,7 @@ export class RsiChartComponent {
   private periodN: number;
 
   private barChart: GoogleChartInterface;
-  @ViewChild("bcc", { static: false })
+  @ViewChild("bcc")
   chartComponent;
 
   private isReady: boolean = false;

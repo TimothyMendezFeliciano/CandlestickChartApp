@@ -31,7 +31,7 @@ export class CandlestickChartComponent implements OnInit {
 
   private isReady: boolean = false;
 
-  @ViewChild("gcc", { static: false })
+  @ViewChild("gcc")
   chartComponent;
 
   constructor(private binanceAPI: BinanceAPIService) {}

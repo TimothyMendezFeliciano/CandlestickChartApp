@@ -40,10 +40,10 @@ export class GraphComponent implements OnInit {
 
   private options: FormGroup;
 
-  @ViewChild(CandlestickChartComponent, { static: false })
+  @ViewChild(CandlestickChartComponent)
   candleStickChild!: CandlestickChartComponent;
 
-  @ViewChild(RsiChartComponent, { static: false })
+  @ViewChild(RsiChartComponent)
   rsiChild!: RsiChartComponent;
   private candleData;
   constructor(private binanceAPI: BinanceAPIService, private fb: FormBuilder) {
