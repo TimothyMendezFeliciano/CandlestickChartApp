@@ -1,5 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { GoogleChartInterface } from "ng2-google-charts";
+import { OHLC } from "src/app/models/OHCL.model";
 
 interface RelativeStrenghIndexStatus {
   color: string[];
@@ -18,11 +19,11 @@ export class RsiChartComponent {
   private averageDown: number;
   private periodN: number;
 
-  private barChart: GoogleChartInterface;
+  public barChart: GoogleChartInterface;
   @ViewChild("bcc")
   chartComponent;
 
-  private isReady: boolean = false;
+  public isReady: boolean = false;
 
   constructor() {}
 

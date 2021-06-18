@@ -4,6 +4,7 @@ import { finalize } from "rxjs/operators";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { CandlestickChartComponent } from "./candlestick-chart/candlestick-chart.component";
 import { RsiChartComponent } from "./rsi-chart/rsi-chart.component";
+import { OHLC } from "../models/OHCL.model";
 
 @Component({
   selector: "app-graph",
@@ -11,7 +12,7 @@ import { RsiChartComponent } from "./rsi-chart/rsi-chart.component";
   styleUrls: ["./graph.component.css"],
 })
 export class GraphComponent implements OnInit {
-  private isReady: boolean = false;
+  public isReady: boolean = false;
 
   defaultTimeFrame: string = "1d";
   availableTimeFrames: string[] = [
@@ -38,7 +39,7 @@ export class GraphComponent implements OnInit {
   defaultLimit: number = 14;
   availableLimit: number[] = [14, 30, 50, 100, 250, 500, 1000];
 
-  private options: FormGroup;
+  public options: FormGroup;
 
   @ViewChild(CandlestickChartComponent)
   candleStickChild!: CandlestickChartComponent;
